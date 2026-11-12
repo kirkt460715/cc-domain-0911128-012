@@ -1,0 +1,112 @@
+{
+  "envelopes": [
+    {
+      "id": "raw-receipt",
+      "source": "supplier",
+      "offset": 0,
+      "operations": [
+        {
+          "id": "receive-raw",
+          "kind": "receive",
+          "lot": "raw",
+          "quantity": "10",
+          "material": "alloy",
+          "unit": "kg",
+          "supplier": "synthetic-supplier",
+          "location": "inbox"
+        }
+      ],
+      "occurred_at": "2026-11-01T00:00:00Z"
+    },
+    {
+      "id": "split",
+      "source": "factory",
+      "offset": 0,
+      "operations": [
+        {
+          "id": "split-op",
+          "kind": "transform",
+          "inputs": [
+            {
+              "lot": "raw",
+              "quantity": "10"
+            }
+          ],
+          "outputs": [
+            {
+              "lot": "part-a",
+              "quantity": "6",
+              "location": "warehouse"
+            },
+            {
+              "lot": "part-b",
+              "quantity": "3",
+              "location": "warehouse"
+            }
+          ],
+          "waste": "1",
+          "process": "cutting"
+        }
+      ],
+      "occurred_at": "2026-11-01T00:00:00Z"
+    },
+    {
+      "id": "ship",
+      "source": "factory",
+      "offset": 1,
+      "operations": [
+        {
+          "id": "ship-op",
+          "kind": "ship",
+          "lot": "part-a",
+          "quantity": "2",
+          "location": "warehouse",
+          "customer": "customer",
+          "shipment": "shipment-1"
+        }
+      ],
+      "occurred_at": "2026-11-01T00:00:00Z"
+    }
+  ],
+  "factors": [
+    {
+      "id": "factor-raw",
+      "revision": 1,
+      "lot": "raw",
+      "value": "2",
+      "unit": "kgCO2e/kg",
+      "valid_from": "2026-01-01",
+      "valid_to": "2027-01-01",
+      "recorded_at": "2026-10-01T00:00:00Z"
+    }
+  ],
+  "process_emissions": [
+    {
+      "operation": "split-op",
+      "value": "1",
+      "unit": "kgCO2e"
+    }
+  ],
+  "coproduct_prices": [
+    {
+      "lot": "part-a",
+      "price": "10",
+      "currency": "CNY",
+      "per_unit": "kg"
+    },
+    {
+      "lot": "part-b",
+      "price": "20",
+      "currency": "CNY",
+      "per_unit": "kg"
+    }
+  ],
+  "study": {
+    "allocation_methods": [
+      "mass",
+      "economic"
+    ],
+    "waste_policy": "no_credit",
+    "known_at": "2026-11-12T00:00:00Z"
+  }
+}
